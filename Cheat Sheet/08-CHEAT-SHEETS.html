@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AZ-104 cheat sheets - print pack</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #eef2f7;
+    color: #14181f;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  }
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 18px;
+    background: #fff;
+    border-bottom: 1px solid #d8dee9;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .toolbar strong { font-size: .95rem; }
+  .toolbar span { font-size: .76rem; color: #4b5563; }
+  .toolbar button {
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #fff;
+    font: inherit;
+    font-size: .84rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .toolbar button:hover { background: #1d4ed8; }
+  .pack { padding: 18px; display: grid; gap: 18px; justify-content: center; }
+  .sheet {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 8mm;
+    background: #fff;
+    box-shadow: 0 10px 30px -18px rgba(16, 24, 40, .55);
+    border: 1px solid #e2e8f0;
+    font-size: 6.3pt;
+    line-height: 1.13;
+    column-count: 2;
+    column-gap: 6mm;
+    column-fill: auto;
+  }
+  h1 {
+    margin: 0 0 1.5mm;
+    padding-bottom: 1mm;
+    border-bottom: 1.4pt solid #2563eb;
+    font-size: 12pt;
+    line-height: 1.12;
+    letter-spacing: -.01em;
+    column-span: all;
+  }
+  h2 {
+    margin: 0 0 .4mm;
+    padding: .8mm 0 .5mm;
+    border-bottom: .7pt solid #cbd5e1;
+    font-size: 8.4pt;
+    line-height: 1.15;
+    color: #1d4ed8;
+    break-after: avoid;
+  }
+  p { margin: 0 0 1.2mm; }
+  p.note {
+    margin: 1mm 0 1.5mm;
+    font-size: 6pt;
+    color: #4b5563;
+  }
+  code {
+    font-family: "Cascadia Mono", Consolas, monospace;
+    font-size: .92em;
+    background: #eef2f9;
+    padding: 0 .5mm;
+    border-radius: 1mm;
+  }
+  table {
+    width: 100%;
+    margin: 0 0 1.1mm;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  thead { display: table-header-group; }
+  th {
+    padding: .6mm .95mm;
+    background: #e8eefb;
+    border: .5pt solid #c7d2e5;
+    font-size: 6.3pt;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-align: left;
+    text-transform: uppercase;
+    color: #1e3a8a;
+  }
+  td {
+    padding: .5mm .9mm;
+    border: .5pt solid #d7deea;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+  td:first-child { width: 27%; font-weight: 600; color: #0f172a; }
+  tr { break-inside: avoid; }
+  ul { margin: 0 0 1.2mm; padding-left: 3.4mm; }
+  li { margin: 0 0 .4mm; }
+  footer {
+    column-span: all;
+    margin-top: 1.2mm;
+    padding-top: .8mm;
+    border-top: .5pt solid #cbd5e1;
+    font-size: 5.6pt;
+    color: #6b7280;
+  }
+  @media print {
+    body { background: #fff; }
+    .toolbar { display: none; }
+    .pack { display: block; padding: 0; }
+    .sheet {
+      width: auto;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      box-shadow: none;
+      break-after: page;
+    }
+    .sheet:last-of-type { break-after: auto; }
+    @page { size: A4 portrait; margin: 8mm; }
+  }
+</style>
+</head>
+<body>
+<header class="toolbar">
+  <div><strong>AZ-104 cheat sheets</strong> &middot; <span>five domains, one A4 page each</span></div>
+  <button type="button" onclick="window.print()">Print all five sheets</button>
+</header>
+<main class="pack">
+
+<article class="sheet" id="sheet-1" aria-label="Manage Azure identities and governance">
+<h1>AZ-104 cheat sheet 1/5 &mdash; Manage Azure identities and governance</h1>
+<p class="note"><em>One page. Facts snapshot 2026-11; verify current behaviour on Microsoft Learn before the exam.</em></p>
+<h2>Tenants, subscriptions, and hierarchy</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Resource hierarchy</td><td>Management group &rarr; subscription &rarr; resource group &rarr; resource. Policy and RBAC inherit <strong>downward only</strong>.</td></tr>
+<tr><td>Tenant vs subscription</td><td>A tenant (Entra ID) holds identities; a subscription is a billing and scale boundary that <strong>trusts one tenant</strong>.</td></tr>
+<tr><td>Multiple subscriptions</td><td>Billing scopes (billing account &rarr; invoice section &rarr; subscription) are separate from the resource hierarchy. Move subscriptions between management groups freely.</td></tr>
+<tr><td>Management groups</td><td>Up to <strong>6 levels</strong> below the tenant root, <strong>10,000</strong> per directory; a group or subscription has exactly <strong>one parent</strong>.</td></tr>
+<tr><td>Moving resources</td><td>Moving to a new resource group keeps the resource ID's RG segment; moving to a new subscription changes the whole ID. Both sides must be in the <strong>same region</strong> for most types.</td></tr>
+<tr><td>Region move</td><td>Not supported by "move" for most services &mdash; redeploy from a template, or use Azure Resource Mover.</td></tr>
+<tr><td>Resource group rules</td><td>A resource lives in exactly one RG. Deleting the RG deletes everything in it. RGs cannot be nested.</td></tr>
+<tr><td>Naming and tags</td><td>Tags are <strong>not inherited</strong> from RG or subscription. A policy with the <code>Modify</code> effect can add or inherit them.</td></tr>
+</tbody></table>
+<h2>Microsoft Entra users and groups</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>User types</td><td><strong>Member</strong> (in tenant) vs <strong>Guest</strong> (B2B). <code>userType</code> is informational; authorization comes from role assignments.</td></tr>
+<tr><td>Create users</td><td>Portal, Microsoft Graph PowerShell, Azure CLI (<code>az ad user create</code>), bulk CSV import (max <strong>50,000</strong> rows).</td></tr>
+<tr><td>Delete and restore</td><td>Deleted users stay restorable for <strong>30 days</strong> with the same object ID.</td></tr>
+<tr><td>Groups</td><td><strong>Security</strong> groups grant access only. <strong>Microsoft 365</strong> groups add mailbox, calendar, SharePoint, Teams. <strong>Mail-enabled security</strong> does both.</td></tr>
+<tr><td>Membership</td><td><strong>Assigned</strong> (manual) or <strong>dynamic</strong> (rule on attributes). Dynamic membership is read-only; you cannot add members by hand.</td></tr>
+<tr><td>Dynamic rule limits</td><td>One rule per group; no nesting of groups; the owner of the attribute can change membership.</td></tr>
+<tr><td>Role-assignable groups</td><td>Created with <code>isAssignableToRole = true</code>; cannot be converted afterwards, and cannot be dynamic.</td></tr>
+<tr><td>Licences</td><td>Group-based licensing needs a <strong>usage location</strong> on every user. Removing a member removes the licence.</td></tr>
+<tr><td>Licence errors</td><td>Not enough licences &middot; usage location missing &middot; conflicting service plans &middot; dependent add-on missing.</td></tr>
+<tr><td>SSPR</td><td>Needs <strong>P1/P2</strong> for on-prem writeback; administrators always need <strong>two</strong> methods; writeback requires Entra Connect.</td></tr>
+<tr><td>External users</td><td>Invite by email; the guest redeems in their home tenant. Cross-tenant access settings control inbound and outbound trust.</td></tr>
+<tr><td>Entra Domain Services</td><td>Managed domain for legacy LDAP/Kerberos/NTLM workloads; no domain-admin rights; one-way sync from Entra ID.</td></tr>
+</tbody></table>
+<h2>Azure RBAC</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Assignment parts</td><td>Security principal + role definition + <strong>scope</strong>. Permissions = Actions &minus; NotActions, then deny assignments win.</td></tr>
+<tr><td>Built-in roles</td><td><strong>Owner</strong> (full + grant access) &middot; <strong>Contributor</strong> (full, no grant) &middot; <strong>Reader</strong> &middot; <strong>User Access Administrator</strong> (grant only) &middot; <strong>Role Based Access Control Administrator</strong> (grant, no data access).</td></tr>
+<tr><td>Scope choice</td><td>Assign at the <strong>highest</strong> scope that still satisfies least privilege; group membership beats per-user assignments.</td></tr>
+<tr><td>Deny assignments</td><td>Created by managed apps and Blueprints, not by you. They <strong>block even Owners</strong> and cannot be overridden.</td></tr>
+<tr><td>Custom roles</td><td>JSON with <code>Actions</code>, <code>NotActions</code>, <code>DataActions</code>, <code>AssignableScopes</code>. One subscription per custom role by default; add all scopes you need.</td></tr>
+<tr><td>Effective access</td><td>Check <strong>Access control (IAM) &rarr; Check access</strong>, or the <strong>Effective permissions</strong> blade, before troubleshooting.</td></tr>
+<tr><td>Classic administrators</td><td>Co-administrator and Service Administrator are legacy; migrate to RBAC.</td></tr>
+<tr><td>Audit</td><td>Role assignment changes appear in the <strong>Activity log</strong>; sign-ins in Entra <strong>sign-in logs</strong>.</td></tr>
+</tbody></table>
+<h2>Azure Policy</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Definitions and initiatives</td><td>A policy definition is one rule; an <strong>initiative</strong> groups definitions for one assignment. Assign at management group for the widest reach.</td></tr>
+<tr><td>Effects</td><td><code>Deny</code>, <code>Audit</code>, <code>Append</code>, <code>Modify</code>, <code>DeployIfNotExists</code>, <code>AuditIfNotExists</code>, <code>Disabled</code>. <code>Deny</code> blocks new and updated resources only.</td></tr>
+<tr><td>Remediation</td><td><code>deployIfNotExists</code> and <code>modify</code> need a <strong>managed identity</strong> and a <strong>remediation task</strong>. Existing non-compliant resources are not fixed automatically.</td></tr>
+<tr><td>Exemptions</td><td><strong>Not required</strong> (waiver) or <strong>Mitigated</strong> (category + expiry). Exemptions are auditable and time-bounded.</td></tr>
+<tr><td>Compliance</td><td>Evaluation runs about every <strong>24 hours</strong>, or on demand. The compliance pane shows per-resource and per-policy state.</td></tr>
+<tr><td>Policy vs RBAC</td><td>RBAC controls <strong>who can do what</strong>; Policy controls <strong>what the result may look like</strong>.</td></tr>
+</tbody></table>
+<h2>Locks, cost, and tooling</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Resource locks</td><td><strong>CanNotDelete</strong> and <strong>ReadOnly</strong>. They apply to the scope and everything below; <code>ReadOnly</code> blocks reads of keys/secrets in some services.</td></tr>
+<tr><td>Lock ownership</td><td>Locks are inherited from the parent scope. A lock does not stop a <strong>deny assignment</strong> or a policy.</td></tr>
+<tr><td>Cost tools</td><td><strong>Cost analysis</strong> (slice by tag/RG/resource), <strong>budgets</strong> (alert at a threshold), <strong>Advisor</strong> recommendations, <strong>exports</strong> to storage.</td></tr>
+<tr><td>Azure Advisor</td><td>Reliability, security, performance, cost, operational excellence &mdash; free, per subscription.</td></tr>
+<tr><td>CLI vs PowerShell</td><td><code>az</code> (Bash/PowerShell) and <code>Az</code> module. <code>az role assignment create</code> / <code>New-AzRoleAssignment</code>; <code>az policy assignment create</code> / <code>New-AzPolicyAssignment</code>.</td></tr>
+<tr><td>Sign-in blocking</td><td><code>az ad user update --account-enabled false</code> or <code>Update-MgUser -AccountEnabled:$false</code>. Requires User Administrator or higher.</td></tr>
+</tbody></table>
+<footer>AZ-104 cheat sheet 1 of 5 &middot; unofficial study aid &middot; snapshot 2026-11</footer>
+</article>
+<article class="sheet" id="sheet-2" aria-label="Implement and manage storage">
+<h1>AZ-104 cheat sheet 2/5 &mdash; Implement and manage storage</h1>
+<p class="note"><em>One page. Facts snapshot 2026-11; verify current behaviour on Microsoft Learn before the exam.</em></p>
+<h2>Storage accounts</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Account kinds</td><td><strong>Standard general-purpose v2</strong> (blobs, files, queues, tables) &middot; <strong>Premium block blobs</strong> &middot; <strong>Premium file shares (FileStorage)</strong> &middot; <strong>Premium page blobs</strong>.</td></tr>
+<tr><td>Performance tiers</td><td>Standard uses HDD-backed capacity; premium uses SSD. A standard account can change access tier per blob, not per account performance tier.</td></tr>
+<tr><td>Replication at create</td><td>Choose LRS/ZRS/GRS/RA-GRS (or GZRS/RA-GZRS). Changing later is possible in one direction only for some paths &mdash; plan first.</td></tr>
+<tr><td>Naming</td><td>3&ndash;24 characters, lowercase letters and numbers only, globally unique.</td></tr>
+<tr><td>Endpoints</td><td><code>https://&lt;account&gt;.blob.core.windows.net</code>, <code>.file.</code>, <code>.queue.</code>, <code>.table.</code>.</td></tr>
+<tr><td>Limits</td><td>5 PiB per standard account (soft), 500 TiB per premium block blob account.</td></tr>
+<tr><td>Network access</td><td>Public from all networks &middot; public from <strong>selected virtual networks and IP addresses</strong> &middot; <strong>private endpoint</strong>. Setting "selected networks" disables the other paths unless you add them.</td></tr>
+<tr><td>Require secure transfer</td><td>Forces HTTPS. Disable only for legacy SMB 2.1 or HTTP-only clients.</td></tr>
+<tr><td>Minimum TLS</td><td>Set to TLS 1.2 (1.3 where supported).</td></tr>
+</tbody></table>
+<h2>Redundancy</h2>
+<table><thead><tr><th>Option</th><th>Copies</th><th>Survives</th></tr></thead><tbody>
+<tr><td><strong>LRS</strong></td><td>3 in one datacenter</td><td>Disk and rack failure</td></tr>
+<tr><td><strong>ZRS</strong></td><td>3 across three zones in one region</td><td>Zone failure</td></tr>
+<tr><td><strong>GRS</strong></td><td>LRS + 3 asynchronous copies in the paired region</td><td>Region failure (no read access until failover)</td></tr>
+<tr><td><strong>RA-GRS</strong></td><td>GRS + read-only access to the secondary endpoint</td><td>Region failure with read access</td></tr>
+<tr><td><strong>GZRS</strong></td><td>ZRS + 3 asynchronous copies in the paired region</td><td>Zone and region failure</td></tr>
+<tr><td><strong>RA-GZRS</strong></td><td>GZRS + readable secondary</td><td>Zone and region failure with read access</td></tr>
+<tr><td>File shares</td><td colspan="2">Premium FileStorage supports <strong>LRS and ZRS only</strong> &mdash; no GRS. Azure Files has <strong>no readable secondary endpoint</strong>.</td></tr>
+</tbody></table>
+<h2>Access and security</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Shared key vs Entra</td><td>Shared key authorizes with the account keys and <strong>bypasses RBAC and file/directory ACLs</strong>. Set <strong>Allow storage account key access = Disabled</strong> to force Entra ID.</td></tr>
+<tr><td>Azure Files identity</td><td>Entra Domain Services, Entra Kerberos (cloud-only, hybrid), or on-prem AD DS over SMB. Needs a <strong>usage location</strong>-style prerequisite check and the right share-level role.</td></tr>
+<tr><td>Blob data roles</td><td><strong>Storage Blob Data Reader / Contributor / Owner</strong>. Control-plane roles (Contributor) do <strong>not</strong> grant blob data access.</td></tr>
+<tr><td>SAS types</td><td><strong>Account SAS</strong> (services + resource types) &middot; <strong>Service SAS</strong> (one service) &middot; <strong>User delegation SAS</strong> (Entra-backed, blobs only, max <strong>7 days</strong>).</td></tr>
+<tr><td>Stored access policy</td><td>Up to <strong>5</strong> per container or share. Revoke by deleting or editing the policy &mdash; a service SAS without a policy cannot be revoked early.</td></tr>
+<tr><td>SAS best practice</td><td>Short expiry, least permissions, HTTPS only, stored access policy when revocation matters, user delegation over account key.</td></tr>
+<tr><td>Keys</td><td>Two keys per account for rotation. <strong>Rotate</strong> in Key Vault-backed flows; regenerating a key invalidates every SAS and client using it.</td></tr>
+<tr><td>Encryption</td><td>Platform-managed keys by default; <strong>customer-managed keys</strong> in Key Vault for blob/file encryption at rest; <strong>infrastructure encryption</strong> adds a second layer.</td></tr>
+<tr><td>Encryption scope</td><td>Applies a distinct CMK to a container or blob instead of the whole account.</td></tr>
+</tbody></table>
+<h2>Azure Files</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Protocols</td><td>SMB 3.x (Windows/Linux/macOS) and NFS 4.1 (premium only, no Windows, no identity-based auth).</td></tr>
+<tr><td>Tiers</td><td>Transaction optimized &middot; Hot &middot; Cool (standard only); premium is provisioned by capacity.</td></tr>
+<tr><td>Snapshots</td><td>Read-only point-in-time copies of a share. Restore a file from a snapshot with <strong>Previous Versions</strong> or <code>Restore-AzStorageFileCopy</code>.</td></tr>
+<tr><td>Soft delete</td><td>Retains deleted shares for 1&ndash;365 days; file-level soft delete is separate.</td></tr>
+<tr><td>Backup</td><td>Azure Backup for Azure Files uses a <strong>snapshot-based</strong> policy; the vault can be Recovery Services or Backup vault.</td></tr>
+<tr><td>Limits</td><td>100 TiB per share on standard (large file shares enabled) and premium; IOPS scale with provisioned size on premium.</td></tr>
+</tbody></table>
+<h2>Blobs</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Access tiers</td><td>Hot &middot; Cool (30-day min) &middot; Cold (90-day min) &middot; Archive (180-day min, offline). Early deletion charges apply.</td></tr>
+<tr><td>Rehydrate</td><td>Archive &rarr; Hot/Cool is <strong>Standard</strong> (hours) or <strong>High</strong> (under an hour, higher cost).</td></tr>
+<tr><td>Lifecycle policy</td><td>Rules with filters (prefix, blob type, tier) and actions (tier, delete, snapshot delete). Runs once a day; changes can take 24&ndash;48 h.</td></tr>
+<tr><td>Versioning</td><td>Automatic previous versions on every write. Combined with <strong>soft delete</strong> for recovery; both are needed for ransomware protection.</td></tr>
+<tr><td>Soft delete</td><td>Blob 1&ndash;365 days, container 7&ndash;365 days, file share 1&ndash;365 days.</td></tr>
+<tr><td>Immutable storage</td><td><strong>Time-based retention</strong> (WORM) or <strong>legal hold</strong>. A locked policy cannot be removed or shortened.</td></tr>
+<tr><td>Object replication</td><td>Asynchronous copy <strong>blob to blob</strong> between accounts; needs versioning on both, change feed on the source, and no immutability on the destination.</td></tr>
+<tr><td>Access levels</td><td>Private (default) &middot; Blob (anonymous read of blobs) &middot; Container (anonymous list). Container access is usually blocked by policy.</td></tr>
+</tbody></table>
+<h2>Tooling</h2>
+<table><thead><tr><th>Tool</th><th>Use it for</th></tr></thead><tbody>
+<tr><td><strong>AzCopy</strong></td><td>Scripted, high-throughput copy. <code>azcopy copy</code>, <code>azcopy sync</code>, <code>--recursive</code>, SAS or Entra auth. No moves between tiers, but copies and then deletes with <code>--delete-destination</code>.</td></tr>
+<tr><td><strong>Storage Explorer</strong></td><td>Desktop GUI; connects with Entra, SAS, key, or <strong>connection string</strong>. Can attach to emulator and to Data Lake.</td></tr>
+<tr><td><strong>Azure Storage Mover</strong></td><td>Managed migration service for large on-premises file and blob estates.</td></tr>
+<tr><td><strong>az storage / AzStorage</strong></td><td>Control-plane and data-plane commands; <code>az storage blob upload-batch</code>, <code>Get-AzStorageBlob</code>.</td></tr>
+</tbody></table>
+<footer>AZ-104 cheat sheet 2 of 5 &middot; unofficial study aid &middot; snapshot 2026-11</footer>
+</article>
+<article class="sheet" id="sheet-3" aria-label="Deploy and manage Azure compute resources">
+<h1>AZ-104 cheat sheet 3/5 &mdash; Deploy and manage Azure compute resources</h1>
+<p class="note"><em>One page. Facts snapshot 2026-11; verify current behaviour on Microsoft Learn before the exam.</em></p>
+<h2>ARM templates and Bicep</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Required sections</td><td><code>$schema</code>, <code>contentVersion</code>, <code>resources</code>. <code>parameters</code>, <code>variables</code>, <code>outputs</code> are optional.</td></tr>
+<tr><td>Idempotency</td><td>Redeploying the same template with the same parameters produces the same result; existing matching resources are left alone.</td></tr>
+<tr><td>Deployment modes</td><td><strong>Incremental</strong> (default; keeps resources not in the template) vs <strong>Complete</strong> (deletes them). Complete deletes resources in the scope, so use a dedicated RG.</td></tr>
+<tr><td>Parameters</td><td><code>secureString</code> and <code>secureObject</code> are not logged. Use <code>allowedValues</code> to constrain input and <code>defaultValue</code> to make a parameter optional.</td></tr>
+<tr><td>Dependencies</td><td><code>dependsOn</code> for explicit ordering. Use <code>reference()</code>/<code>resourceId()</code> for implicit dependencies and outputs; circular dependencies fail validation.</td></tr>
+<tr><td>Scope</td><td><code>resourceGroup</code> (default), <code>subscription</code>, <code>managementGroup</code>, <code>tenant</code>. Nested or linked templates change the scope.</td></tr>
+<tr><td>What-if</td><td>Preview create/modify/delete/ignore before deployment. Available in CLI, PowerShell, and the portal.</td></tr>
+<tr><td>Bicep</td><td>Compiles to ARM JSON. <code>az bicep build</code> / <code>bicep build</code>. <code>bicep decompile</code> is best-effort and usually needs cleanup.</td></tr>
+<tr><td>Modules</td><td>One Bicep file per reusable unit; pass params, take outputs. Registry modules come from ACR.</td></tr>
+<tr><td>Export</td><td>Portal <strong>Export template</strong> only covers resources in that RG and loses some properties; not a substitute for source control.</td></tr>
+</tbody></table>
+<h2>Virtual machines</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Sizes</td><td>B (burstable) &middot; D (general) &middot; E (memory optimised) &middot; F (compute optimised) &middot; N (GPU) &middot; L (storage). The letter is the family, the number is the vCPU count.</td></tr>
+<tr><td>Resize</td><td>Requires a <strong>deallocate</strong> first unless the new size is available on the same host. Cross-family resize may need a redeploy.</td></tr>
+<tr><td>Disks</td><td>OS disk (Premium SSD, Standard SSD, Standard HDD, ephemeral) &middot; data disks &middot; <strong>Ultra disk</strong> (needs a zone, no host caching, only certain sizes).</td></tr>
+<tr><td>Ephemeral OS disk</td><td>Uses local VM storage; no storage cost; lost on deallocate. Good for stateless scale sets.</td></tr>
+<tr><td>Disk caching</td><td><code>ReadOnly</code> suits read-heavy data; <code>None</code> for write-heavy or Ultra. <strong>ReadWrite</strong> is not allowed on some sizes.</td></tr>
+<tr><td>Encryption</td><td>Azure Disk Encryption (BitLocker/DM-Crypt, uses Key Vault) vs <strong>encryption at host</strong> vs server-side encryption with a CMK. ADE requires a key vault.</td></tr>
+<tr><td>Extensions</td><td>Custom Script, DSC, Azure Monitor Agent, VM Backup. Order with <code>dependsOn</code>; the agent runs as SYSTEM/root.</td></tr>
+<tr><td>Networking</td><td>Each VM needs a NIC in a subnet. NSG can sit on the subnet or the NIC; both are evaluated.</td></tr>
+<tr><td>Availability set</td><td>Up to <strong>3 fault domains</strong> and <strong>20 update domains</strong> (default 5). Protects against host and rack failure inside one datacenter only.</td></tr>
+<tr><td>Availability zone</td><td>Physically separate datacenter in the region; <strong>three</strong> in every enabled region. Protects against a datacenter loss.</td></tr>
+<tr><td>SLA</td><td>Single VM with premium disks: <strong>99.9%</strong> &middot; availability set: <strong>99.95%</strong> &middot; zones: <strong>99.99%</strong>.</td></tr>
+</tbody></table>
+<h2>Scale sets</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Orchestration</td><td><strong>Uniform</strong> (identical instances, VMSS-managed) vs <strong>Flexible</strong> (mix of VMSS and standalone VMs, no uniform guarantees).</td></tr>
+<tr><td>Zone spanning</td><td>A uniform set can span zones (max 3) but <strong>not</strong> be both zonal and regional.</td></tr>
+<tr><td>Autoscale</td><td>Metric rules (CPU, memory via agent, queue length) or schedule. Set min, max, and default count.</td></tr>
+<tr><td>Cool-down</td><td>After a scale action the rule waits <code>cooldown</code> (default 5 min) before acting again.</td></tr>
+<tr><td>Scale-in policy</td><td>Default &middot; Newest VM &middot; Oldest VM. Protect instances that must not be removed.</td></tr>
+<tr><td>Upgrade policy</td><td><strong>Manual</strong> &middot; <strong>Automatic</strong> (all at once, may cause downtime) &middot; <strong>Rolling</strong> (batch + pause, honours health probes) &middot; <strong>Canary</strong> (Flexible).</td></tr>
+<tr><td>Overprovisioning</td><td>Creates extra instances then deletes them; speeds deployment but costs briefly. Disable for large or costly SKUs.</td></tr>
+<tr><td>Health</td><td>Application health extension or a load balancer probe drives rolling upgrades and automatic instance repair.</td></tr>
+</tbody></table>
+<h2>Containers</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>ACI</td><td>Serverless container group; fastest to start; no orchestrator; per-second billing. Good for short batch jobs and burst.</td></tr>
+<tr><td>Container group</td><td>One or more containers sharing a host, network namespace, and storage. Restart policy: Always, OnFailure, Never.</td></tr>
+<tr><td>ACI networking</td><td>Optional VNet injection with a delegated subnet; otherwise a public IP or no IP at all.</td></tr>
+<tr><td>ACR</td><td>Private registry. Tiers: Basic, Standard, Premium (geo-replication, private link, content trust).</td></tr>
+<tr><td>ACR auth</td><td><code>docker login</code> with the admin account (avoid), a service principal, a managed identity, or <code>az acr login</code>.</td></tr>
+<tr><td>Container Apps</td><td>Managed Kubernetes-based serverless platform: scale to zero, revisions, traffic splitting, Dapr, KEDA rules.</td></tr>
+<tr><td>AKS</td><td>Full Kubernetes control; node pools, upgrade channels. AZ-104 only needs the basics.</td></tr>
+</tbody></table>
+<h2>App Service</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Plans</td><td>Free/Shared (no SLA) &middot; Basic &middot; Standard &middot; Premium v3 &middot; Isolated (ASE). Scale up = change plan; scale out = instance count.</td></tr>
+<tr><td>Slots</td><td>Standard or higher. A <strong>swap</strong> warms the target slot then switches; slot settings (connection strings, app settings marked "slot setting") stay put.</td></tr>
+<tr><td>Custom domain</td><td>CNAME for a subdomain, <strong>A record + <code>asuid</code> TXT</strong> for the apex. Verify before adding.</td></tr>
+<tr><td>TLS</td><td>App Service managed certificate (free, no wildcard, no apex) or upload a PFX. Enforce HTTPS with a redirect.</td></tr>
+<tr><td>Networking</td><td>Access restrictions (allow/deny by IP or VNet) &middot; VNet integration (outbound) &middot; private endpoint (inbound) &middot; Hybrid Connections.</td></tr>
+<tr><td>Backup</td><td>Needs Standard or higher and a storage account <strong>in the same subscription</strong>. Backs up app content and configuration, not the database by default.</td></tr>
+<tr><td>Deployment</td><td>Zip deploy, GitHub Actions, Azure DevOps, <code>az webapp deploy</code>, run-from-package.</td></tr>
+<tr><td>Always On</td><td>Keeps the app warm; required for continuous WebJobs. Not available on Free/Shared.</td></tr>
+</tbody></table>
+<footer>AZ-104 cheat sheet 3 of 5 &middot; unofficial study aid &middot; snapshot 2026-11</footer>
+</article>
+<article class="sheet" id="sheet-4" aria-label="Implement and manage virtual networking">
+<h1>AZ-104 cheat sheet 4/5 &mdash; Implement and manage virtual networking</h1>
+<p class="note"><em>One page. Facts snapshot 2026-11; verify current behaviour on Microsoft Learn before the exam.</em></p>
+<h2>VNets and subnets</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Address space</td><td>RFC 1918 private ranges; can add several. Must not overlap any peered or connected network.</td></tr>
+<tr><td>Reserved addresses</td><td><strong>5 per subnet</strong>: network, first host (gateway), two for Azure DNS, broadcast. A /24 has 251 usable.</td></tr>
+<tr><td>Smallest subnet</td><td>/29 (3 usable). GatewaySubnet should be <strong>/27 or larger</strong>; AzureBastionSubnet needs <strong>/26 or larger</strong>.</td></tr>
+<tr><td>Reserved names</td><td><code>GatewaySubnet</code>, <code>AzureFirewallSubnet</code>, <code>AzureBastionSubnet</code>, <code>AzureFirewallManagementSubnet</code>.</td></tr>
+<tr><td>Delegation</td><td>Hands a subnet to a service (App Service, ACI, SQL Managed Instance). One delegation per subnet; no mixed workloads.</td></tr>
+<tr><td>Adding a subnet</td><td>Allowed while VMs are running. Changing the address space is allowed only if nothing is using the new range.</td></tr>
+</tbody></table>
+<h2>Peering and routing</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Peering</td><td>Private, low-latency, both directions must be created; status must be <strong>Connected</strong> on both sides. Works across regions too, billed as egress. Fails if address spaces <strong>overlap</strong>.</td></tr>
+<tr><td>Non-transitivity</td><td>Peering is <strong>not</strong> transitive: A&harr;B and B&harr;C does not connect A to C. Use a hub with a firewall or NVA, or Azure Virtual WAN.</td></tr>
+<tr><td>Gateway transit</td><td><code>Allow gateway transit</code> on the hub peering + <code>Use remote gateways</code> on the spoke. One gateway serves many spokes.</td></tr>
+<tr><td>Service chaining</td><td>A UDR in a spoke pointing 0.0.0.0/0 at a firewall in the hub gives inspection and transitive reachability.</td></tr>
+<tr><td>UDR next hops</td><td>Virtual network gateway &middot; Virtual network &middot; Internet &middot; Virtual appliance &middot; <strong>None</strong> (blackhole).</td></tr>
+<tr><td>Route selection</td><td>Longest prefix match first, then <strong>UDR over BGP over system route</strong>.</td></tr>
+<tr><td>IP forwarding</td><td>An NVA NIC must have IP forwarding enabled, or packets are dropped.</td></tr>
+<tr><td>Default routes</td><td>Azure adds system routes for the VNet, peered VNets, and 0.0.0.0/0 &rarr; Internet. A UDR overrides the Internet route.</td></tr>
+</tbody></table>
+<h2>IP addressing</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Public IP SKUs</td><td><strong>Basic</strong> (open by default, no zones, retiring) vs <strong>Standard</strong> (secure by default, static, zone-redundant or zonal, needs an NSG to allow inbound).</td></tr>
+<tr><td>Allocation</td><td>Static or dynamic. Standard public IPs are always static.</td></tr>
+<tr><td>Private IP</td><td>Dynamic or static per NIC. Changing it requires the NIC to be idle.</td></tr>
+</tbody></table>
+<h2>NSGs and ASGs</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Scope</td><td>Subnet and/or NIC. Both are evaluated: <strong>inbound</strong> subnet then NIC, <strong>outbound</strong> NIC then subnet.</td></tr>
+<tr><td>Default rules</td><td>Allow VNet inbound/outbound, allow Azure Load Balancer, deny all other inbound, allow Internet outbound. Cannot be deleted, only overridden by a higher-priority rule.</td></tr>
+<tr><td>Priority</td><td>100&ndash;4096, lower number wins. First match applies; no "deny all" needed unless you want one.</td></tr>
+<tr><td>Stateful</td><td>Return traffic for an allowed flow is automatically allowed.</td></tr>
+<tr><td>ASG</td><td>Groups NICs by role (web, app, db). Rules then reference the ASG as source or destination instead of IP ranges.</td></tr>
+<tr><td>Service tags</td><td><code>VirtualNetwork</code>, <code>AzureLoadBalancer</code>, <code>Internet</code>, <code>Storage</code>, <code>Sql</code>, <code>AzureCloud</code>, plus service-specific tags.</td></tr>
+<tr><td>Effective rules</td><td><strong>Network Watcher &rarr; Effective security rules</strong> shows the merged result for a NIC.</td></tr>
+</tbody></table>
+<h2>Connectivity services</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Azure Bastion</td><td>PaaS jump host in <code>AzureBastionSubnet</code> (/26+). RDP/SSH over TLS 443 in the browser; VMs need <strong>no public IP</strong>.</td></tr>
+<tr><td>Service endpoint</td><td>Extends the VNet identity to a PaaS service over the Azure backbone. Still uses the service's public IP; add the subnet to the service firewall.</td></tr>
+<tr><td>Private endpoint</td><td>A private IP in your subnet for a PaaS service. Disable public access to force it. Needs a <strong>private DNS zone</strong> to resolve.</td></tr>
+<tr><td>Private Link DNS</td><td><code>privatelink.blob.core.windows.net</code> etc., linked to the VNet. Without the link, clients resolve the public IP.</td></tr>
+<tr><td>VPN Gateway</td><td>Site-to-site, point-to-site, or VNet-to-VNet. <code>GatewaySubnet</code>, a gateway SKU (VpnGw1+ for production), and a local network gateway for each site.</td></tr>
+<tr><td>Active-active</td><td>Two gateway instances and two tunnels; needs <code>--enable-active-active</code> and BGP for automatic failover.</td></tr>
+<tr><td>ExpressRoute</td><td>Private dedicated circuit; needs a gateway with the right SKU and a route filter. Does not traverse the internet.</td></tr>
+<tr><td>Virtual WAN</td><td>Managed hub-and-spoke with transitive routing, VPN, ExpressRoute, and firewall as a service.</td></tr>
+</tbody></table>
+<h2>Name resolution</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Azure DNS</td><td>Public zones. Delegate with an NS record from the registrar. Alias records can point at a public IP, Traffic Manager, or Front Door and follow IP changes.</td></tr>
+<tr><td>CNAME at apex</td><td>Not allowed. Use an <strong>alias A/AAAA</strong> record instead.</td></tr>
+<tr><td>Private DNS</td><td><code>*.internal</code> style zones linked to VNets. <code>autoregistration</code> records VM names automatically.</td></tr>
+<tr><td>Resolution order</td><td>Private zone (linked VNet) &rarr; Azure-provided DNS &rarr; custom DNS servers on the VNet.</td></tr>
+<tr><td>Cross-VNet</td><td>A private zone must be <strong>linked</strong> to every VNet that must resolve it. Peering alone is not enough.</td></tr>
+</tbody></table>
+<h2>Load balancing and delivery</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Load Balancer SKU</td><td><strong>Basic</strong> (open, no SLA, no zones) vs <strong>Standard</strong> (secure by default, SLA 99.99%, zones). Standard adds <strong>HA ports</strong> rules (all ports and protocols) for NVAs and clustered appliances.</td></tr>
+<tr><td>Public vs internal</td><td>Public LB has a public frontend IP; internal LB uses a private IP in a subnet. Both route by 5-tuple hash.</td></tr>
+<tr><td>Health probe</td><td>TCP, HTTP, or HTTPS. Failed probes remove the instance; there is no automatic re-add without a passing probe.</td></tr>
+<tr><td>Session persistence</td><td>None (5-tuple) &middot; Client IP (2-tuple) &middot; Client IP and protocol (3-tuple).</td></tr>
+<tr><td>Outbound rules</td><td>Standard LB provides outbound SNAT; without a rule or NAT gateway, VMs have no outbound internet.</td></tr>
+<tr><td>Application Gateway</td><td>Layer 7 reverse proxy: path-based routing, TLS termination, cookie affinity, autoscaling (v2), and <strong>WAF</strong> (OWASP CRS; Detection vs Prevention &mdash; tune exclusions before prevention). Needs a dedicated subnet.</td></tr>
+<tr><td>Front Door</td><td>Global anycast HTTP(S) entry: latency routing, priority failover, caching, WAF at the edge. Backends can be App Service, App Gateway, or any public endpoint.</td></tr>
+</tbody></table>
+<h2>Troubleshooting</h2>
+<table><thead><tr><th>Tool</th><th>Use it for</th></tr></thead><tbody>
+<tr><td><strong>IP flow verify</strong></td><td>Is this 5-tuple allowed or denied, and which NSG rule decided?</td></tr>
+<tr><td><strong>Next hop</strong></td><td>Where would traffic from this VM to that IP go? Shows the effective route type.</td></tr>
+<tr><td><strong>Connection troubleshoot</strong></td><td>End-to-end reachability test between a VM and an endpoint, with latency and hops.</td></tr>
+<tr><td><strong>Effective routes</strong></td><td>Merged system, BGP, and UDR routes for a NIC.</td></tr>
+<tr><td><strong>Connection Monitor</strong></td><td>Continuous, alerting reachability tests across VMs and endpoints.</td></tr>
+<tr><td><strong>Packet capture</strong></td><td>Capture at the VM NIC (or via NSG flow logs) for deep analysis.</td></tr>
+</tbody></table>
+<footer>AZ-104 cheat sheet 4 of 5 &middot; unofficial study aid &middot; snapshot 2026-11</footer>
+</article>
+<article class="sheet" id="sheet-5" aria-label="Monitor and back up Azure resources">
+<h1>AZ-104 cheat sheet 5/5 &mdash; Monitor and back up Azure resources</h1>
+<p class="note"><em>One page. Facts snapshot 2026-11; verify current behaviour on Microsoft Learn before the exam.</em></p>
+<h2>Azure Monitor data</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Metrics</td><td>Numeric time series, near real time. <strong>Platform</strong> metrics are automatic; <strong>guest</strong> metrics need the Azure Monitor Agent and a data collection rule.</td></tr>
+<tr><td>Metric retention</td><td><strong>93 days</strong> at minute granularity. Extend by archiving to storage or sending to Log Analytics.</td></tr>
+<tr><td>Activity log</td><td>Control-plane events (who did what to which resource). Kept <strong>90 days</strong>; export to Log Analytics, storage, or Event Hubs for longer.</td></tr>
+<tr><td>Resource log</td><td>Data-plane and service-specific logs (&ldquo;diagnostic logs&rdquo; in older docs). Off by default; needs a diagnostic setting.</td></tr>
+<tr><td>Diagnostic setting</td><td>One per resource (up to five) sending to <strong>Log Analytics</strong>, <strong>storage</strong>, <strong>Event Hubs</strong>, or a partner. Subscriptions can use a policy to deploy them at scale.</td></tr>
+<tr><td>Log Analytics</td><td>Workspace-based log store queried with KQL. Retention: 30 days interactive by default, up to 730; archive tier beyond that.</td></tr>
+<tr><td>Workspace-scoped query</td><td><code>workspace('name').Table</code> queries another workspace without leaving yours.</td></tr>
+<tr><td>VM insights</td><td>Guest performance and dependency map. Needs AMA + DCR; the legacy MMA agent is retired.</td></tr>
+<tr><td>Container insights</td><td>Node, pod, and container metrics and logs for AKS and Arc.</td></tr>
+</tbody></table>
+<h2>KQL essentials</h2>
+<table><thead><tr><th>Operator</th><th>What it does</th></tr></thead><tbody>
+<tr><td><code>where</code></td><td>Filter rows. <code>| where TimeGenerated &gt; ago(1h) and Level == &quot;Error&quot;</code></td></tr>
+<tr><td><code>summarize</code></td><td>Aggregate: <code>summarize count() by Computer</code>, <code>avg(CPU) by bin(TimeGenerated, 5m)</code></td></tr>
+<tr><td><code>bin()</code></td><td>Buckets a time column into fixed intervals for charts.</td></tr>
+<tr><td><code>project</code></td><td>Choose and rename columns; <code>project-away</code> removes them.</td></tr>
+<tr><td><code>extend</code></td><td>Add a computed column.</td></tr>
+<tr><td><code>join</code></td><td>Combine tables (<code>kind=inner</code>, <code>leftouter</code>, &hellip;) on a key.</td></tr>
+<tr><td><code>take</code> / <code>limit</code></td><td>Sample rows for exploration.</td></tr>
+<tr><td><code>order by</code></td><td>Sort; add <code>desc</code> for newest first.</td></tr>
+<tr><td><code>_ResourceId</code></td><td>Scopes results to a resource when a workspace holds many.</td></tr>
+<tr><td>Time filters</td><td><code>ago(24h)</code>, <code>between (datetime(&hellip;) .. datetime(&hellip;))</code>, <code>startofday()</code>.</td></tr>
+</tbody></table>
+<h2>Alerts</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Signal types</td><td>Metric &middot; log (Log Analytics) &middot; activity log &middot; smart detection &middot; Prometheus (managed).</td></tr>
+<tr><td>Metric alert</td><td>Threshold on a metric, evaluated every 1 minute by default. Multi-resource alerts apply one rule to many resources with dimensions.</td></tr>
+<tr><td>Log alert</td><td>KQL result count or value. Can use <strong>dimensions</strong> to split per computer. Minimum frequency 1 minute (5 for some).</td></tr>
+<tr><td>Activity log alert</td><td>Triggered by control-plane events such as service health or resource delete.</td></tr>
+<tr><td>Action group</td><td>Reusable set of notifications (email, SMS, voice, push) and actions (Logic App, Function, webhook, Automation Runbook, Event Hubs, ITSM).</td></tr>
+<tr><td>Alert processing rule</td><td>Suppress or route alerts during a maintenance window, or apply an action group to a filtered set.</td></tr>
+<tr><td>Severity</td><td>0 critical &rarr; 4 verbose. Severity is part of the alert rule, not the action group.</td></tr>
+<tr><td>State</td><td>New &middot; Acknowledged &middot; Closed. Fired alerts auto-resolve when the condition clears (metric alerts).</td></tr>
+</tbody></table>
+<h2>Monitoring agents</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>AMA</td><td>Azure Monitor Agent replaces MMA/OMS. One agent, many DCRs.</td></tr>
+<tr><td>DCR</td><td>Data collection rule: what to collect, how to transform it, where to send it. Associated with VMs, VMSS, or Arc servers.</td></tr>
+<tr><td>Multiple DCRs</td><td>Several DCRs can apply to one VM; the union of their data sources is collected.</td></tr>
+<tr><td>Syslog / Windows events</td><td>Configured in the DCR, not on the agent.</td></tr>
+<tr><td>Association</td><td>DCR associations can be created per VM or at scale with policy.</td></tr>
+</tbody></table>
+<h2>Network Watcher</h2>
+<table><thead><tr><th>Tool</th><th>Use it for</th></tr></thead><tbody>
+<tr><td><strong>IP flow verify</strong></td><td>Allow/deny decision and the NSG rule responsible.</td></tr>
+<tr><td><strong>Next hop</strong></td><td>Effective route and next-hop type for a destination.</td></tr>
+<tr><td><strong>Connection troubleshoot</strong></td><td>One-shot reachability test with latency.</td></tr>
+<tr><td><strong>Connection Monitor</strong></td><td>Continuous tests with alerts, across VMs, endpoints, and ExpressRoute.</td></tr>
+<tr><td><strong>Packet capture</strong></td><td>Capture traffic on a VM NIC or through an NSG.</td></tr>
+<tr><td><strong>Flow logs</strong></td><td>NSG flow logs (now VNet flow logs) record allowed and denied flows to storage.</td></tr>
+<tr><td><strong>Topology</strong></td><td>Visual network map for a resource group.</td></tr>
+</tbody></table>
+<h2>Backup</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Vault choice</td><td><strong>Recovery Services vault</strong> for IaaS VMs, SQL in VM, Azure Files, SAP HANA. <strong>Backup vault</strong> for blobs, managed disks, PostgreSQL, AKS, and vaulted (enhanced) policies.</td></tr>
+<tr><td>Redundancy</td><td>LRS, ZRS, GRS (default). <strong>Cross-region restore</strong> must be enabled on the vault before you need it.</td></tr>
+<tr><td>VM backup</td><td>Snapshot-based, application-consistent where possible. Policy sets frequency (daily/weekly), instant restore tier, and retention.</td></tr>
+<tr><td>Enhanced policy</td><td>More frequent backups (every 4 hours), multiple daily recovery points, longer instant restore.</td></tr>
+<tr><td>Retention</td><td>Daily, weekly, monthly, yearly rules. The longest matching rule wins; retention is calculated from the backup time.</td></tr>
+<tr><td>Restore options</td><td>Replace existing &middot; Create new (alternate location) &middot; Restore disks &middot; File recovery (mount a recovery point as a drive, 12-hour limit).</td></tr>
+<tr><td>Azure Files backup</td><td>Snapshot-based; the share must be in a storage account the vault can reach.</td></tr>
+<tr><td>Blob backup</td><td><strong>Operational backup</strong> (local, continuous, 1&ndash;360 days) or <strong>vaulted backup</strong> (copy to a vault, cross-region).</td></tr>
+<tr><td>Soft delete</td><td>14 days by default for backup items; <strong>always</strong> enable enhanced soft delete.</td></tr>
+<tr><td>Security</td><td>Multi-user authorization, immutable vault, MFA for critical operations, alert on delete.</td></tr>
+</tbody></table>
+<h2>Site Recovery</h2>
+<table><thead><tr><th>Item</th><th>What to remember</th></tr></thead><tbody>
+<tr><td>Purpose</td><td>Disaster recovery replication to a secondary region (or on-premises to Azure), with orchestrated failover.</td></tr>
+<tr><td>Replication</td><td>Continuous, per VM, into a cache storage account in the target region. RPO typically 5&ndash;15 minutes.</td></tr>
+<tr><td>Recovery plan</td><td>Groups VMs, adds pre/post scripts and manual steps, and sets boot order.</td></tr>
+<tr><td>Test failover</td><td>Isolated test network, no impact on production, no replication stop. Always test before a real failover.</td></tr>
+<tr><td>Failover</td><td>Planned (no data loss), unplanned (possible data loss), or test. Commit or re-protect afterwards.</td></tr>
+<tr><td>Targets</td><td>Azure VMs, Hyper-V, VMware, physical servers. Requires the Mobility service agent on each source.</td></tr>
+</tbody></table>
+<footer>AZ-104 cheat sheet 5 of 5 &middot; unofficial study aid &middot; snapshot 2026-11</footer>
+</article>
+</main>
+</body>
+</html>
